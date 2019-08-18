@@ -104,6 +104,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\AppData.cs" />
+    <Compile Include="Data\NameListOperator.cs" />
     <Compile Include="Data\NameModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
