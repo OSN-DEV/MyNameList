@@ -10,15 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyNameList {
+namespace MyNameList.UI {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// MyNameListMain.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class MyNameListMain : Window {
+        public MyNameListMain() {
             InitializeComponent();
         }
     }
