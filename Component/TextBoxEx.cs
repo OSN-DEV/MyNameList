@@ -1,22 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MyNameList.Component {
+    /// <summary>
+    /// TextBoxの拡張クラス
+    /// </summary>
+    internal class TextBoxEx : TextBox {
 
-    public class TextBoxEx : TextBox {
-        public TextBoxEx() {
+        #region Declaration
+        /// <summary>
+        /// IMEのモード
+        /// </summary>
+        internal enum ImeModeType {
+            /// <summary>
+            /// 使用不可
+            /// </summary>
+            Disabled,
+            /// <summary>
+            /// ひらがな
+            /// </summary>
+            Hiragana,
+            /// <summary>
+            /// OFF
+            /// </summary>
+            Off,
+            /// <summary>
+            /// 変更なし
+            /// </summary>
+            DoNotCare
         }
+
+        /// <summary>
+        /// テキストの内容が変更された場合に発火する。発火のタイミングはフォーカス喪失時。
+        /// </summary>
+        internal event EventHandler TextValueChanged;
+
+        private string _text;
+        #endregion
+
+        #region Public Property
+        public ImeModeType ImeMode { set; get; } = ImeModeType.DoNotCare;
+        #endregion
+
+        #region Constructor
+        internal TextBoxEx() {
+            this.Initialized += (sender, e) => {
+                switch (this.ImeMode) {
+                    case ImeModeType.Disabled:
+                        InputMethod.SetIsInputMethodEnabled(this, false);
+                        break;
+                    case ImeModeType.Hiragana:
+                        InputMethod.SetPreferredImeState(this, InputMethodState.On);
+                        InputMethod.SetPreferredImeConversionMode(this, ImeConversionModeValues.FullShape | ImeConversionModeValues.Native);
+                        break;
+                    case ImeModeType.Off:
+                        InputMethod.SetPreferredImeState(this, InputMethodState.Off);
+                        break;
+                    case ImeModeType.DoNotCare:
+                        InputMethod.SetPreferredImeState(this, InputMethodState.DoNotCare);
+                        break;
+                    default:
+                        throw new ArgumentException("unknown ime type : " + this.ImeMode);
+                }
+            };
+
+            this.GotFocus += (sender, e) => {
+                this._text = this.Text;
+                this.SelectAll();
+            };
+
+            this.LostFocus += (sender, e) => {
+                if (this._text != this.Text) {
+                    this.TextValueChanged?.Invoke(this, null);
+                }
+            };
+        }
+        #endregion
     }
 }
