@@ -3,10 +3,105 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MyNameList.UI"
+        xmlns:uc="clr-namespace:MyNameList.Component"
         mc:Ignorable="d"
         Title="MyNameListMain" Height="450" Width="800">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/MyNameList;component/UI/AppStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBlock" x:Key="InputAreaTextBlock" >
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File(_F)">
+                <MenuItem Header="Exit(_X)"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel Orientation="Horizontal" Background="{StaticResource PrimaryColor}" HorizontalAlignment="Stretch">
+            <TextBlock Text="En" Style="{StaticResource InputAreaTextBlock}"/>
+            <uc:TextBoxEx />
+            <TextBlock Text="Jp"  Style="{StaticResource InputAreaTextBlock}"/>
+            <uc:TextBoxEx />
+            <TextBlock Text="Note"  Style="{StaticResource InputAreaTextBlock}"/>
+            <uc:TextBoxEx />
+            <Button Content="+" />
+        </StackPanel>
+
+
+
+        <ListView  Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" >
+            <ListView.ItemContainerStyle >
+                <Style TargetType="ListViewItem" >
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ContentControl}">
+                                <Border BorderBrush="Transparent" BorderThickness="1" Background="{TemplateBinding Background}">
+                                    <GridViewRowPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="Background" Value="#FFE6E0E0" />
+                            <Setter Property="BorderBrush" Value="#FFE6E0E0" />
+                            <Setter Property="Foreground" Value="{StaticResource DefaultTextForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True" >
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="EnglishName" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="DisplayName" FontSize="{StaticResource DefaultFonSize}"  Padding="5"  />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock  />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="Note" FontSize="{StaticResource DefaultFonSize}"  Padding="5" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock  />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>
