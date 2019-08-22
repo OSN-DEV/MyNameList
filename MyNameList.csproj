@@ -104,6 +104,9 @@
     <Compile Include="Data\CommonErrorDialogModel.cs" />
     <Compile Include="Data\NameListOperator.cs" />
     <Compile Include="Data\NameModel.cs" />
+    <Compile Include="Test\AppDataTest.xaml.cs">
+      <DependentUpon>AppDataTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\CommonErrorDialog.xaml.cs">
       <DependentUpon>CommonErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
     <Resource Include="app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Test\AppDataTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\AppStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,8 +171,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
