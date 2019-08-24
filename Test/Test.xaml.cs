@@ -12,20 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MyNameList.Data;
+using MyNameList.UI;
 
 namespace MyNameList.Test {
     /// <summary>
     /// AppDataTest.xaml の相互作用ロジック
     /// </summary>
-    public partial class AppDataTest : Window {
-        public AppDataTest() {
+    public partial class Test : Window {
+        public Test() {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
+        private void Test1(object sender, RoutedEventArgs e) {
             var instance = AppData.GetInstance();
             instance.WindowPosX = 1.0;
             instance.Save();
+        }
+
+        private void Test2(object sender, RoutedEventArgs e) {
+            var dialog = new CommonErrorDialog(this) {
+                DialogTitle = "title",
+                ErrorMessage = "message",
+                FilePath = "path"
+            };
+            dialog.ShowDialog();
         }
     }
 }

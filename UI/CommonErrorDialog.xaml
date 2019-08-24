@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyNameList.UI"
         mc:Ignorable="d"
-        Height="150" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="Height" Title="{Binding Title}">
+        Height="150" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="Height" Title="{Binding DialogTitle}" WindowStyle="ToolWindow" >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
         <TextBlock Margin="5" Text="{Binding ErrorMessage}"/>
         <TextBox   Margin="5" Text="{Binding FilePath}" Foreground="{StaticResource GuideTextLabel}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button Content="OK" Style="{StaticResource LabelButton}" HorizontalAlignment="Left" VerticalAlignment="Center" IsDefault="True" />
+            <Button Content="OK" Style="{StaticResource LabelButton}" HorizontalAlignment="Left" VerticalAlignment="Center" IsDefault="True" Click="OK_Click" />
         </StackPanel>
     </StackPanel>
 </Window>

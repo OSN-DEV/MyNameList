@@ -1,4 +1,4 @@
-﻿<Window x:Class="MyNameList.Test.AppDataTest"
+﻿<Window x:Class="MyNameList.Test.Test"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="AppDataTest" Height="450" Width="800">
     <StackPanel Orientation="Vertical">
-        <Button Click="Button_Click" Content="Test"/>
+        <Button Click="Test1" Content="Test"/>
+        <Button Click="Test2" Content="Test"/>
     </StackPanel>
 </Window>

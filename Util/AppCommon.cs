@@ -34,7 +34,7 @@ namespace MyNameList.Util {
             var fullname = typeof(App).Assembly.Location;
             var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(fullname);
             var ver = info.FileVersion;
-            return string.Format("MyNameList({0})", ver);
+            return $"{Wording.Title.AppName}({ver})";
         }
 
 
@@ -49,7 +49,7 @@ namespace MyNameList.Util {
                 [CallerFilePath] string file = "", 
                 [CallerLineNumber] int line = 0, 
                 [CallerMemberName] string member = "") {
-            System.Diagnostics.Debug.WriteLine(string.Format("[{0}][{1}][{2}]{3}", file, line, member, log));
+            System.Diagnostics.Debug.WriteLine($"[{file}][{line}][{member}]{log}");
         }
         #endregion
     }

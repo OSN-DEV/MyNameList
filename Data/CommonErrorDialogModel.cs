@@ -14,7 +14,7 @@ namespace MyNameList.Data {
         /// <summary>
         /// ダイアログのタイトル。省略時は"Error"を設定。
         /// </summary>
-        public string Title { set; get; } = "Error";
+        public string DialogTitle { set; get; } = "Error";
 
         /// <summary>
         /// エラーメッセージ

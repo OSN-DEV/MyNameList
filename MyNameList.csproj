@@ -104,8 +104,8 @@
     <Compile Include="Data\CommonErrorDialogModel.cs" />
     <Compile Include="Data\NameListOperator.cs" />
     <Compile Include="Data\NameModel.cs" />
-    <Compile Include="Test\AppDataTest.xaml.cs">
-      <DependentUpon>AppDataTest.xaml</DependentUpon>
+    <Compile Include="Test\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\CommonErrorDialog.xaml.cs">
       <DependentUpon>CommonErrorDialog.xaml</DependentUpon>
@@ -114,6 +114,7 @@
       <DependentUpon>MyNameListMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\AppCommon.cs" />
+    <Compile Include="Util\Wording.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -154,7 +155,7 @@
     <Resource Include="app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Test\AppDataTest.xaml">
+    <Page Include="Test\Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

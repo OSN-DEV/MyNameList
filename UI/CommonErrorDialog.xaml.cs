@@ -11,14 +11,51 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MyNameList.Util;
+using MyNameList.Data;
 
 namespace MyNameList.UI {
     /// <summary>
-    /// CommonErrorDialog.xaml の相互作用ロジック
+    /// 汎用エラーダイアログ
     /// </summary>
     public partial class CommonErrorDialog : Window {
-        public CommonErrorDialog() {
+
+        #region Public Property
+        /// <summary>
+        /// ダイアログのタイトル。省略時は"エラー"を設定。
+        /// </summary>
+        public string DialogTitle { set; get; } = Wording.Title.Error;
+        public string ErrorMessage { set; get; }
+        public string FilePath { set; get; }
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public CommonErrorDialog(Window owner) {
+            this.Owner = owner;
             InitializeComponent();
+
+            this.Loaded += delegate {
+                this.DataContext = new CommonErrorDialogModel() {
+                    DialogTitle = this.DialogTitle,
+                    ErrorMessage = this.ErrorMessage,
+                    FilePath = this.FilePath
+                };
+            };
         }
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// OK Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OK_Click(object sender, RoutedEventArgs e) {
+            this.DialogResult = true;
+        }
+        #endregion
     }
 }
