@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MyNameList.Util;
 using MyNameList.Data;
+using MyNameList.Wording;
 
 namespace MyNameList.UI {
     /// <summary>
@@ -24,7 +25,7 @@ namespace MyNameList.UI {
         /// <summary>
         /// ダイアログのタイトル。省略時は"エラー"を設定。
         /// </summary>
-        public string DialogTitle { set; get; } = Wording.Title.Error;
+        public string DialogTitle { set; get; } = Titles.Error;
         public string ErrorMessage { set; get; }
         public string FilePath { set; get; }
         #endregion

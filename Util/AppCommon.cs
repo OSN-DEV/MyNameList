@@ -34,7 +34,7 @@ namespace MyNameList.Util {
             var fullname = typeof(App).Assembly.Location;
             var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(fullname);
             var ver = info.FileVersion;
-            return $"{Wording.Title.AppName}({ver})";
+            return $"{MyNameList.Wording.Titles.AppName}({ver})";
         }
 
 

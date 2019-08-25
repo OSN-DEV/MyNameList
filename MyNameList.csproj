@@ -117,7 +117,8 @@
       <DependentUpon>MyNameListMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\AppCommon.cs" />
-    <Compile Include="Util\Wording.cs" />
+    <Compile Include="Wording\Labels.cs" />
+    <Compile Include="Wording\Titles.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

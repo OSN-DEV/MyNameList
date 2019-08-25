@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uc="clr-namespace:MyNameList.Component"
+        xmlns:wd="clr-namespace:MyNameList.Wording"
         mc:Ignorable="d"
-        Title="MyNameListMain" Height="450" Width="800">
+        Title="MyNameListMain" Height="450" Width="400" WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -22,15 +23,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="File(_F)">
-                <MenuItem Header="Exit(_X)"/>
+            <MenuItem Header="File(_F)" Padding="2,3,2,5">
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuNew }}" Click="FileMenuItem_Click" />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuOpen }}" Click="FileMenuItem_Click" />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuRecent }}" Click="FileMenuItem_Click" />
+                <Separator />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuSave }}" Click="FileMenuItem_Click" />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuSaveAs }}" Click="FileMenuItem_Click" />
+                <Separator />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuExit }}" Click="FileMenuItem_Click" />
             </MenuItem>
         </Menu>
-        <StackPanel Orientation="Horizontal" Background="{StaticResource PrimaryColor}" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="{StaticResource PrimaryColor}" HorizontalAlignment="Stretch">
             <TextBlock Text="En" Style="{StaticResource InputAreaTextBlock}"/>
             <uc:TextBoxEx />
             <TextBlock Text="Jp"  Style="{StaticResource InputAreaTextBlock}"/>
@@ -42,7 +50,7 @@
 
 
 
-        <ListView  Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" >
+        <ListView  Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" >
             <ListView.ItemContainerStyle >
                 <Style TargetType="ListViewItem" >
                     <Setter Property="OverridesDefaultStyle" Value="True"/>

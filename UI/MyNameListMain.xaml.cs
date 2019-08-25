@@ -17,8 +17,24 @@ namespace MyNameList.UI {
     /// MyNameListMain.xaml の相互作用ロジック
     /// </summary>
     public partial class MyNameListMain : Window {
+        #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
         public MyNameListMain() {
             InitializeComponent();
         }
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// ファイルメニューのメニューアイテムクリック時のイベント
+        /// </summary>
+        /// <param name="sender">メニューアイテム</param>
+        /// <param name="e"></param>
+        private void FileMenuItem_Click(object sender, RoutedEventArgs e) {
+
+        }
+        #endregion
     }
 }
