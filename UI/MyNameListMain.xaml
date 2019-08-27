@@ -38,19 +38,19 @@
                 <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuExit }}" Click="FileMenuItem_Click" />
             </MenuItem>
         </Menu>
+        
         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="{StaticResource PrimaryColor}" HorizontalAlignment="Stretch">
-            <TextBlock Text="En" Style="{StaticResource InputAreaTextBlock}"/>
-            <uc:TextBoxEx />
+            <TextBlock Text="En" Style="{StaticResource InputAreaTextBlock}" />
+            <uc:TextBoxEx x:Name="cEnglishName" ImeMode="Off" Width="80" KeyDown="InputArea_KeyDown" TextValueChanged="InputArea_TextValueChanged" />
             <TextBlock Text="Jp"  Style="{StaticResource InputAreaTextBlock}"/>
-            <uc:TextBoxEx />
-            <TextBlock Text="Note"  Style="{StaticResource InputAreaTextBlock}"/>
-            <uc:TextBoxEx />
-            <Button Content="+" />
+            <uc:TextBoxEx x:Name="cJapaneseName" ImeMode="Hiragana"  Width="80"  KeyDown="InputArea_KeyDown" TextValueChanged="InputArea_TextValueChanged" />
+            <TextBlock Text="Note"  Style="{StaticResource InputAreaTextBlock}" />
+            <uc:TextBoxEx x:Name="cNote" ImeMode="Hiragana" Width="80"  KeyDown="InputArea_KeyDown" />
+            <Button Name="cAdd" Content="+" Style="{StaticResource LabelButtonWhite}" Click="Add_Click" IsEnabled="False" />
         </StackPanel>
 
 
-
-        <ListView  Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" >
+        <ListView Name="cNameList"  Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" >
             <ListView.ItemContainerStyle >
                 <Style TargetType="ListViewItem" >
                     <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -82,17 +82,17 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock />
+                                    <TextBlock Text="{Binding EnglishName}"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn>
-                        <GridViewColumnHeader Content="DisplayName" FontSize="{StaticResource DefaultFonSize}"  Padding="5"  />
+                        <GridViewColumnHeader Content="JapaneseName" FontSize="{StaticResource DefaultFonSize}"  Padding="5"  />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock  />
+                                    <TextBlock Text="{Binding JapaneseName}" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -102,7 +102,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock  />
+                                    <TextBlock Text="{Binding Note}" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

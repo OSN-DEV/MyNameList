@@ -44,7 +44,7 @@ namespace MyNameList.Component {
         #endregion
 
         #region Constructor
-        internal TextBoxEx() {
+        public TextBoxEx() {
             this.Initialized += (sender, e) => {
                 switch (this.ImeMode) {
                     case ImeModeType.Disabled:

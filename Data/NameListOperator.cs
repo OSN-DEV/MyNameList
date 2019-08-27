@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MyLib.File;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyLib.File;
 
 namespace MyNameList.Data {
     /// <summary>

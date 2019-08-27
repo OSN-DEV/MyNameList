@@ -47,24 +47,12 @@
         <Setter Property="Foreground" Value="{StaticResource DefaultTextForeground}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="BorderBrush" Value="#EEEEEE" />
-        <Setter Property="MaxLength" Value="15" />
         <Setter Property="Margin" Value="3,4" />
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
+    <Style TargetType="component:TextBoxEx" BasedOn="{StaticResource BaseTextBoxStyle}" />
 
-    <Style TargetType="component:TextBoxEx" BasedOn="{StaticResource BaseTextBoxStyle}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type component:TextBoxEx}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
+
     <!-- ラベルボタン -->
     <Style x:Key="LabelButton" TargetType="Button">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -90,7 +78,23 @@
                 <Setter Property="Foreground" Value="#2B3962" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False" >
-                <Setter Property="Foreground" Value="Gainsboro" />
+                <Setter Property="Foreground" Value="#33EEEEEE" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LabelButtonWhite" TargetType="Button" BasedOn="{StaticResource LabelButton}" >
+        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="#67759E" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True" >
+                <Setter Property="Foreground" Value="#2B3962" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False" >
+                <Setter Property="Foreground" Value="#33EEEEEE" />
             </Trigger>
         </Style.Triggers>
     </Style>
