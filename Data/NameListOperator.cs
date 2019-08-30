@@ -32,7 +32,6 @@ namespace MyNameList.Data {
             JpDesc
         }
         private SortType _currentSortType = SortType.EnAsc;
-        private string _filePath;
         #endregion
 
         #region Constructor
@@ -43,6 +42,16 @@ namespace MyNameList.Data {
         /// リストのデータソース。
         /// </summary>
         internal ObservableCollection<NameModel> DataContext { private set;  get; } = new ObservableCollection<NameModel>();
+
+        /// <summary>
+        /// 名称リストのファイルパス
+        /// </summary>
+        internal string FilePath { set; get; } = null;
+
+        /// <summary>
+        /// 名称リストのファイル名
+        /// </summary>
+        internal string FileName { private set; get; } = null;
         #endregion
 
         #region Public Method
@@ -69,8 +78,9 @@ namespace MyNameList.Data {
                         Note = item[2]
                     });
                 }
+                this.FileName = file.Name;
             }
-            this._filePath = filePath;
+            this.FilePath = filePath;
             this._currentSortType = SortType.EnAsc;
             this.SortBySortType();
             return false;
@@ -81,7 +91,7 @@ namespace MyNameList.Data {
         /// </summary>
         /// <returns>true:保存成功、false:それ以外</returns>
         internal bool Save() {
-            using (var file = new FileOperator(this._filePath)) {
+            using (var file = new FileOperator(this.FilePath)) {
                 try {
                     file.Delete();
                     file.OpenForWrite();
@@ -90,6 +100,7 @@ namespace MyNameList.Data {
                                        model.JapaneseName + Separator +
                                        model.Note);
                     }
+                    this.FileName = file.Name;
                 } catch {
                     return false;
                 }

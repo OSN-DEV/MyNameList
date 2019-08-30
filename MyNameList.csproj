@@ -118,6 +118,8 @@
     </Compile>
     <Compile Include="Util\AppCommon.cs" />
     <Compile Include="Wording\Labels.cs" />
+    <Compile Include="Wording\Messages.cs" />
+    <Compile Include="Wording\Others.cs" />
     <Compile Include="Wording\Titles.cs" />
   </ItemGroup>
   <ItemGroup>

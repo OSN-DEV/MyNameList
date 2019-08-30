@@ -41,9 +41,9 @@
         
         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="{StaticResource PrimaryColor}" HorizontalAlignment="Stretch">
             <TextBlock Text="En" Style="{StaticResource InputAreaTextBlock}" />
-            <uc:TextBoxEx x:Name="cEnglishName" ImeMode="Off" Width="80" KeyDown="InputArea_KeyDown" TextValueChanged="InputArea_TextValueChanged" />
+            <uc:TextBoxEx x:Name="cEnglishName" ImeMode="Off" Width="80" KeyDown="InputArea_KeyDown" TextChanged="InputArea_TextChanged" />
             <TextBlock Text="Jp"  Style="{StaticResource InputAreaTextBlock}"/>
-            <uc:TextBoxEx x:Name="cJapaneseName" ImeMode="Hiragana"  Width="80"  KeyDown="InputArea_KeyDown" TextValueChanged="InputArea_TextValueChanged" />
+            <uc:TextBoxEx x:Name="cJapaneseName" ImeMode="Hiragana"  Width="80"  KeyDown="InputArea_KeyDown"  TextChanged="InputArea_TextChanged" />
             <TextBlock Text="Note"  Style="{StaticResource InputAreaTextBlock}" />
             <uc:TextBoxEx x:Name="cNote" ImeMode="Hiragana" Width="80"  KeyDown="InputArea_KeyDown" />
             <Button Name="cAdd" Content="+" Style="{StaticResource LabelButtonWhite}" Click="Add_Click" IsEnabled="False" />
