@@ -50,10 +50,11 @@
         </StackPanel>
 
 
-        <ListView Name="cNameList"  Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" MouseDoubleClick="NameList_MouseDoubleClick" >
+        <ListView Name="cNameList"  Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}"  SelectionMode="Single" MouseDoubleClick="NameList_MouseDoubleClick" KeyDown="NameList_KeyDown" >
             <ListView.ItemContainerStyle >
                 <Style TargetType="ListViewItem" >
                     <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ContentControl}">
@@ -83,7 +84,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding EnglishName}"/>
+                                    <TextBlock Text="{Binding EnglishName}" MouseLeftButtonDown="Cell_MouseLeftButtonDown"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -94,7 +95,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding JapaneseName}" />
+                                    <TextBlock Text="{Binding JapaneseName}" MouseLeftButtonDown="Cell_MouseLeftButtonDown" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

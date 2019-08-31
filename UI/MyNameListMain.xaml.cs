@@ -125,7 +125,9 @@ namespace MyNameList.UI {
                             return;
                         }
                     }
-                    this.RunSaveProcess(true);
+                    this.ClearInputArea();
+                    this._operator.DataContext.Clear();
+                    this.Title = Titles.NewFile;
                     break;
                 case Labels.FileMenuOpen:
                     if (this._isChanged && this.ShowSaveConfirmDialog()) {
@@ -250,6 +252,38 @@ namespace MyNameList.UI {
             this.cJapaneseName.Text = model.JapaneseName;
             this.cNote.Text = model.Note;
             this.cEnglishName.Tag = model;
+        }
+
+        /// <summary>
+        /// 名称リストキー入力
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NameList_KeyDown(object sender, KeyEventArgs e) {
+            if (!(cNameList.GetItemAt(Mouse.GetPosition(this.cNameList))?.DataContext is NameModel model)) {
+                return;
+            }
+            if (e.Key == Key.Delete) {
+                this._operator.DataContext.Remove(model);
+                this.SetStatusChanged();
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// 英名・和名クリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            var text = sender as TextBlock;
+            if (null != text) {
+                try {
+                    Clipboard.SetText(text.Text);
+                } catch {
+
+                }
+            }
         }
         #endregion
 
@@ -416,8 +450,7 @@ namespace MyNameList.UI {
                 this.cFileMenuRecent.Items.Add(item);
             }
         }
+
         #endregion
-
-
     }
 }
