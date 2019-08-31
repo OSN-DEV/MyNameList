@@ -69,7 +69,7 @@ namespace MyNameList.Data {
                     return false;
                 }
                 file.OpenForRead();
-                while(file.Eof) {
+                while(!file.Eof) {
                     var item = file.ReadLine().Split(Separator);
                     Array.Resize(ref item, 3);
                     this.DataContext.Add(new NameModel() {
@@ -83,7 +83,7 @@ namespace MyNameList.Data {
             this.FilePath = filePath;
             this._currentSortType = SortType.EnAsc;
             this.SortBySortType();
-            return false;
+            return true;
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
         xmlns:uc="clr-namespace:MyNameList.Component"
         xmlns:wd="clr-namespace:MyNameList.Wording"
         mc:Ignorable="d"
-        Title="MyNameListMain" Height="450" Width="400" WindowStartupLocation="CenterScreen">
+        Title="MyNameListMain" Height="450" Width="400" WindowStartupLocation="CenterScreen" Closing="Window_Closing" KeyDown="Window_KeyDown">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -30,7 +30,7 @@
             <MenuItem Header="File(_F)" Padding="2,3,2,5">
                 <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuNew }}" Click="FileMenuItem_Click" />
                 <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuOpen }}" Click="FileMenuItem_Click" />
-                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuRecent }}" Click="FileMenuItem_Click" />
+                <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuRecent }}" Name="cFileMenuRecent"/>
                 <Separator />
                 <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuSave }}" Click="FileMenuItem_Click" />
                 <MenuItem Header="{Binding Source= {x:Static wd:Labels.FileMenuSaveAs }}" Click="FileMenuItem_Click" />

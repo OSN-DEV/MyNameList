@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyNameList.Wording {
+﻿namespace MyNameList.Wording {
     /// <summary>
     /// メッセージなどを定義
     /// </summary>
@@ -19,6 +13,11 @@ namespace MyNameList.Wording {
         /// ファイルの保存失敗
         /// </summary>
         internal const string FailToSave = "Fail to save.";
+
+        /// <summary>
+        /// ファイルのオープン失敗
+        /// </summary>
+        internal const string FailToOpen = "Fail to open.";
 
         /// <summary>
         /// ファイルの保存確認

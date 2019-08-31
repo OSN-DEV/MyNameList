@@ -35,6 +35,11 @@ namespace MyNameList.Wording {
         internal const string SaveAs = "Save name list";
 
         /// <summary>
+        /// ファイルを開くダイアログのタイトル
+        /// </summary>
+        internal const string Open = "Open name list";
+
+        /// <summary>
         /// 確認ダイアログのタイトル
         /// </summary>
         internal const string Confirm = "Confirm";

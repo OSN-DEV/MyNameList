@@ -23,10 +23,13 @@ namespace MyNameList.UI {
     /// MyNameListMain.xaml の相互作用ロジック
     /// </summary>
     public partial class MyNameListMain : Window {
+
         #region Declaration
         private bool _isChanged = false;
         private string _currentNameListFile = "";
         private readonly NameListOperator _operator = new NameListOperator();
+        private AppData _appData = AppData.GetInstance();
+        private const int MaxRecentFileCount = 5;
         #endregion
 
         #region Constructor
@@ -41,10 +44,64 @@ namespace MyNameList.UI {
             this.Loaded += (sender, e) => {
                 this.cEnglishName.Focus();
             };
+            this.CreateRecentFilesMenu();
+            if (0 <= this._appData.WindowPosX && (this._appData.WindowPosX + this._appData.WindowSizeW) < SystemParameters.VirtualScreenWidth) {
+                this.Left = this._appData.WindowPosX;
+            }
+            if (0 <= this._appData.WindowPosY && (this._appData.WindowPosY + this._appData.WindowSizeH) < SystemParameters.VirtualScreenHeight) {
+                this.Top = this._appData.WindowPosY;
+            }
+            if (0 < this._appData.WindowSizeW && this._appData.WindowSizeW <= SystemParameters.WorkArea.Width) {
+                this.Width = this._appData.WindowSizeW;
+            }
+            if (0 < this._appData.WindowSizeH && this._appData.WindowSizeH <= SystemParameters.WorkArea.Height) {
+                this.Height = this._appData.WindowSizeH;
+            }
         }
         #endregion
 
         #region Event
+        /// <summary>
+        /// キー入力
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, KeyEventArgs e) {
+            switch(e.Key) {
+                case Key.S:
+                    if (Keyboard.Modifiers == ModifierKeys.Control) {
+                        e.Handled = true;
+                        this.RunSaveProcess();
+                    }
+                    break;
+                case Key.W:
+                    e.Handled = true;
+                    this.Close();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// ウィンドウクローズ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (this._isChanged && this.ShowSaveConfirmDialog()) {
+                if (!this.RunSaveProcess()) {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            this._appData.WindowPosX = this.Left;
+            this._appData.WindowPosY = this.Top;
+            this._appData.WindowSizeW = this.Width;
+            this._appData.WindowSizeH = this.Height;
+            this._appData.Save();
+        }
+
+
+
         /// <summary>
         /// ファイルメニューのメニューアイテムクリック時のイベント
         /// </summary>
@@ -59,7 +116,7 @@ namespace MyNameList.UI {
                             return;
                         }
                     }
-                    this.RunCreateProcess();
+                    this.RunSaveProcess(true);
                     break;
                 case Labels.FileMenuOpen:
                     if (this._isChanged && this.ShowSaveConfirmDialog()) {
@@ -131,7 +188,6 @@ namespace MyNameList.UI {
         }
         #endregion
 
-
         #region Private Method
         /// <summary>
         /// 追加ボタンの使用可否を入力状況に応じて設定
@@ -160,20 +216,6 @@ namespace MyNameList.UI {
         }
 
         /// <summary>
-        /// 新規ファイルとして保存する
-        /// </summary>
-        private void SaveAsNewFile() {
-
-        }
-
-        /// <summary>
-        /// 上書き保存する
-        /// </summary>
-        private void SaveOverride() {
-
-        }
-
-        /// <summary>
         /// ファイルの保存プロセスを実行する
         /// </summary>
         /// <param name="isNewFile"></param>
@@ -193,10 +235,13 @@ namespace MyNameList.UI {
                 dialog.Title = Titles.SaveAs;
                 dialog.FileName = Others.NewFileName;
                 dialog.Filter = "MNL ファイル|*" + Others.MyNameListExt;
-                dialog.FilterIndex = 2;
+                dialog.FilterIndex = 1;
                 if (true == dialog.ShowDialog()) {
                     this._currentNameListFile = dialog.FileName;
                     this._operator.FilePath = this._currentNameListFile;
+                    this.AddRecentFile(this._currentNameListFile);
+                } else {
+                    return false;
                 }
             }
 
@@ -211,7 +256,6 @@ namespace MyNameList.UI {
 
             this._isChanged = false;
             this.Title = _operator.FileName;
-
             return true;
         }
 
@@ -224,19 +268,89 @@ namespace MyNameList.UI {
                                                             MessageBoxButton.YesNo, MessageBoxImage.Question));
         }
 
-        /// <summary>
-        /// 名称ファイルを作成する。
-        /// </summary>
-        private void RunCreateProcess() {
-
-        }
 
         /// <summary>
         /// 名称ファイルを開く。
         /// </summary>
         private void RunOpenProcess() {
+            var dialog = new OpenFileDialog();
+            dialog.Title = Titles.Open;
+            dialog.FileName = Others.NewFileName;
+            dialog.Filter = "MNL ファイル|*" + Others.MyNameListExt;
+            dialog.FilterIndex = 1;
+            if (true == dialog.ShowDialog()) {
+                this.ShowNameList(dialog.FileName);
+            } else {
+                return;
+            }
+        }
 
+        /// <summary>
+        /// 指定された名称リストのファイルを表示する
+        /// </summary>
+        /// <param name="filePath">名称リストのファイル</param>
+        /// <param name="showReadErrorDialog">true:エラーダイアログを表示、false:それ以外</param>
+        private void ShowNameList(string filePath, bool showReadErrorDialog = true) {
+            this.ClearInputArea();
+
+            if (!_operator.FileLoad(filePath)) {
+                if (showReadErrorDialog) {
+                    new CommonErrorDialog(this) {
+                        ErrorMessage = Messages.FailToOpen,
+                        FilePath = filePath
+                    }.ShowDialog();
+                }
+                this._appData.RecentFiles.Remove(filePath);
+                this._appData.Save();
+                this.CreateRecentFilesMenu();
+            } else {
+                this.AddRecentFile(filePath);
+            }
+        }
+
+        /// <summary>
+        /// 最近使ったファイルの追加
+        /// </summary>
+        /// <param name="filePath"></param>
+        private void AddRecentFile(string filePath) {
+            var recentFiles = this._appData.RecentFiles;
+            if (recentFiles.Contains(filePath)) {
+                recentFiles.Remove(filePath);
+            }
+            recentFiles.Insert(0, filePath);
+            while (MaxRecentFileCount < recentFiles.Count) {
+                recentFiles.RemoveAt(recentFiles.Count - 1);
+            }
+            this._appData.Save();
+            this.CreateRecentFilesMenu();
+        }
+
+        /// <summary>
+        /// 最近使ったファイルのメニューを作成
+        /// </summary>
+        private void CreateRecentFilesMenu() {
+            this.cFileMenuRecent.Items.Clear();
+            if (0 == this._appData.RecentFiles.Count) {
+                this.cFileMenuRecent.IsEnabled = false;
+                return;
+            }
+
+            this.cFileMenuRecent.IsEnabled = true;
+            foreach (var file in this._appData.RecentFiles) {
+                var item = new MenuItem() { Header = file };
+                item.Click += (sender, e) => {
+                    var menuItem = (MenuItem)sender;
+                    if (this._isChanged && this.ShowSaveConfirmDialog()) {
+                        if (!this.RunSaveProcess()) {
+                            return;
+                        }
+                    }
+                    this.ShowNameList(menuItem.Header.ToString());
+                };
+                this.cFileMenuRecent.Items.Add(item);
+            }
         }
         #endregion
+
     }
 }
