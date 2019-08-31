@@ -1,30 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace MyNameList.Data {
     /// <summary>
     /// 名称モデル。
     /// </summary>
-    internal class NameModel {
+    internal class NameModel : INotifyPropertyChanged {
+
+        #region Declaration
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _englishName = "";
+        private string _japaneseName = "";
+        private string _note = "";
+        #endregion
 
         #region Public Property
         /// <summary>
         /// 英名。
         /// </summary>
-        public string EnglishName { set; get; } = "";
+        public string EnglishName {
+            set {
+                this._englishName = value;
+                this.OnPropertyChanged(nameof(EnglishName));
+            }
+            get { return this._englishName; }
+        }
 
         /// <summary>
         /// 和名。
         /// </summary>
-        public string JapaneseName { set; get; } = "";
+        public string JapaneseName {
+            set {
+                this._japaneseName = value;
+                this.OnPropertyChanged(nameof(JapaneseName));
+            }
+            get { return this._japaneseName; }
+        }
 
         /// <summary>
         /// メモ。
         /// </summary>
-        public string Note { set; get; } = "";
+        public string Note {
+            set {
+                this._note = value;
+                this.OnPropertyChanged(nameof(Note));
+            }
+            get { return this._note; }
+        }
         #endregion
 
         #region Constructor
@@ -33,6 +55,13 @@ namespace MyNameList.Data {
             this.EnglishName = model.EnglishName;
             this.JapaneseName = model.JapaneseName;
             this.Note = model.Note;
+        }
+        #endregion
+
+        #region Protecte Method
+        protected void OnPropertyChanged(string name) {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         #endregion
     }

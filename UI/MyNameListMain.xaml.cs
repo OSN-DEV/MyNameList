@@ -155,7 +155,16 @@ namespace MyNameList.UI {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e) {
-            this._operator.Add(this.cEnglishName.Text, this.cJapaneseName.Text, this.cNote.Text);
+            if (null == this.cEnglishName.Tag) {
+                this._operator.Add(this.cEnglishName.Text, this.cJapaneseName.Text, this.cNote.Text);
+            } else {
+                var model = this.cEnglishName.Tag as NameModel;
+                this.cEnglishName.Tag = null;
+                model.EnglishName = this.cEnglishName.Text;
+                model.JapaneseName = this.cJapaneseName.Text;
+                model.Note = this.cNote.Text;
+                this.cJapaneseName.Text = model.JapaneseName;
+            }
             this.cEnglishName.Focus();
             this.ClearInputArea();
             this.SetStatusChanged();
@@ -226,6 +235,21 @@ namespace MyNameList.UI {
                 title += isAsc ? Titles.Desc : Titles.Asc;
             }
             header.Content = title;
+        }
+
+        /// <summary>
+        /// 名称リストダブルクリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NameList_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            if (!(cNameList.GetItemAt(Mouse.GetPosition(this.cNameList))?.DataContext is NameModel model)) {
+                return;
+            }
+            this.cEnglishName.Text = model.EnglishName;
+            this.cJapaneseName.Text = model.JapaneseName;
+            this.cNote.Text = model.Note;
+            this.cEnglishName.Tag = model;
         }
         #endregion
 
@@ -393,6 +417,7 @@ namespace MyNameList.UI {
             }
         }
         #endregion
+
 
     }
 }
