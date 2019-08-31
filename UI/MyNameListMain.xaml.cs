@@ -57,6 +57,15 @@ namespace MyNameList.UI {
             if (0 < this._appData.WindowSizeH && this._appData.WindowSizeH <= SystemParameters.WorkArea.Height) {
                 this.Height = this._appData.WindowSizeH;
             }
+
+            if (0 < this._appData.RecentFiles.Count) {
+                this.ShowNameList(this._appData.RecentFiles[0], false);
+            }
+
+            this.cEnglishNameTitle.Content = Titles.EnglishName + Titles.Asc;
+            this.cEnglishNameTitle.Width = this.Width / 3;
+            this.cJapaneseNameTitle.Width = this.Width / 3;
+            this.cNoteTitle.Width = this.Width / 4;
         }
         #endregion
 
@@ -186,6 +195,38 @@ namespace MyNameList.UI {
         private void InputArea_TextChanged(object sender, TextChangedEventArgs e) {
             this.SetAddButtonEnabled();
         }
+
+        /// <summary>
+        /// 名称リストヘッダークリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NameListHeader_Click(object sender, RoutedEventArgs e) {
+            var header = (GridViewColumnHeader)sender;
+            var title = header.Content.ToString();
+            if (title == Titles.EnglishName) {
+                this._operator.SortByEnglshName();
+                title += Titles.Asc;
+                this.cJapaneseNameTitle.Content = Titles.JapaneseName;
+            } else if (title == Titles.JapaneseName) {
+                this._operator.SortByJapaneseName();
+                title += Titles.Asc;
+                this.cEnglishNameTitle.Content = Titles.EnglishName;
+            } else {
+                bool isAsc = title.EndsWith(Titles.Asc);
+                if (title.StartsWith(Titles.EnglishName)) {
+                    title = Titles.EnglishName;
+                    this._operator.SortByEnglshName(!isAsc);
+                    this.cJapaneseNameTitle.Content = Titles.JapaneseName;
+                } else {
+                    title = Titles.EnglishName;
+                    this._operator.SortByJapaneseName(!isAsc);
+                    this.cEnglishNameTitle.Content = Titles.EnglishName;
+                }
+                title += isAsc ? Titles.Desc : Titles.Asc;
+            }
+            header.Content = title;
+        }
         #endregion
 
         #region Private Method
@@ -305,6 +346,7 @@ namespace MyNameList.UI {
                 this.CreateRecentFilesMenu();
             } else {
                 this.AddRecentFile(filePath);
+                this._currentNameListFile = filePath;
             }
         }
 

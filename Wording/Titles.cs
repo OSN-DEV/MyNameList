@@ -43,5 +43,30 @@ namespace MyNameList.Wording {
         /// 確認ダイアログのタイトル
         /// </summary>
         internal const string Confirm = "Confirm";
+
+        /// <summary>
+        /// 昇順ソート
+        /// </summary>
+        internal const string Asc = " ▼";
+
+        /// <summary>
+        /// 降順ソート
+        /// </summary>
+        internal const string Desc = " ▲";
+
+        /// <summary>
+        /// 英名
+        /// </summary>
+        public const string EnglishName = "EnglishName";
+
+        /// <summary>
+        /// 和名
+        /// </summary>
+        public const string JapaneseName = "JapaneseName";
+
+        /// <summary>
+        /// メモ
+        /// </summary>
+        public const string Note = "Note";
     }
 }

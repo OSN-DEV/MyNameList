@@ -6,7 +6,7 @@
         xmlns:uc="clr-namespace:MyNameList.Component"
         xmlns:wd="clr-namespace:MyNameList.Wording"
         mc:Ignorable="d"
-        Title="MyNameListMain" Height="450" Width="400" WindowStartupLocation="CenterScreen" Closing="Window_Closing" KeyDown="Window_KeyDown">
+        Title="MyNameListMain" Height="450" Width="400" Closing="Window_Closing" KeyDown="Window_KeyDown">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -78,7 +78,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
-                        <GridViewColumnHeader Content="EnglishName" />
+                        <GridViewColumnHeader Content="{Binding Source= {x:Static wd:Titles.EnglishName }}" 
+                                              Name="cEnglishNameTitle" Click="NameListHeader_Click" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -88,7 +89,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn>
-                        <GridViewColumnHeader Content="JapaneseName" FontSize="{StaticResource DefaultFonSize}"  Padding="5"  />
+                        <GridViewColumnHeader Content="{Binding Source= {x:Static wd:Titles.JapaneseName }}" 
+                                              Name="cJapaneseNameTitle" Click="NameListHeader_Click"   />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -98,7 +100,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn>
-                        <GridViewColumnHeader Content="Note" FontSize="{StaticResource DefaultFonSize}"  Padding="5" />
+                        <GridViewColumnHeader Content="{Binding Source= {x:Static wd:Titles.Note }}" Name="cNoteTitle" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>

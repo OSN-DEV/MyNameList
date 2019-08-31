@@ -26,5 +26,14 @@ namespace MyNameList.Data {
         /// </summary>
         public string Note { set; get; } = "";
         #endregion
+
+        #region Constructor
+        public NameModel() { }
+        public NameModel(NameModel model) {
+            this.EnglishName = model.EnglishName;
+            this.JapaneseName = model.JapaneseName;
+            this.Note = model.Note;
+        }
+        #endregion
     }
 }

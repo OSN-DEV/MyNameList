@@ -138,9 +138,11 @@ namespace MyNameList.Data {
         internal void SortByEnglshName(bool ascending = true) {
             this._currentSortType = ascending ? SortType.EnAsc : SortType.EnDesc;
             if (ascending) {
-                this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.EnglishName));
+                // this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.EnglishName));
+                this.Copy(new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.EnglishName)));
             } else {
-                this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.EnglishName));
+                // this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.EnglishName));
+                this.Copy(new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.EnglishName)));
             }
         }
 
@@ -151,9 +153,11 @@ namespace MyNameList.Data {
         internal void SortByJapaneseName(bool ascending = true) {
             this._currentSortType = ascending ? SortType.JpAsc : SortType.JpDesc;
             if (ascending) {
-                this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.JapaneseName));
+                // this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.JapaneseName));
+                this.Copy(new ObservableCollection<NameModel>(this.DataContext.OrderBy(n => n.JapaneseName)));
             } else {
-                this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.JapaneseName));
+                // this.DataContext = new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.JapaneseName));
+                this.Copy(new ObservableCollection<NameModel>(this.DataContext.OrderByDescending(n => n.JapaneseName)));
             }
         }
         #endregion
@@ -171,6 +175,17 @@ namespace MyNameList.Data {
                 default:
                     this.SortByJapaneseName(this._currentSortType == SortType.JpAsc);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// DataContextの情報をディープコピーする
+        /// </summary>
+        /// <param name="srcCollection">コピー元のコレクション</param>
+        private void Copy(ObservableCollection<NameModel> srcCollection) {
+            this.DataContext.Clear();
+            foreach(var src in srcCollection) {
+                this.DataContext.Add(new NameModel(src));
             }
         }
         #endregion
