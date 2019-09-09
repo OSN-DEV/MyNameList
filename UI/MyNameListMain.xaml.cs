@@ -84,8 +84,10 @@ namespace MyNameList.UI {
                     }
                     break;
                 case Key.W:
-                    e.Handled = true;
-                    this.Close();
+                    if (Keyboard.Modifiers == ModifierKeys.Control) {
+                        e.Handled = true;
+                        this.Close();
+                    }
                     break;
             }
         }
