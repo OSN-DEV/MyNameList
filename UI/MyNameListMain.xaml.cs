@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using Microsoft.Win32;
 using MyNameList.Component;
-using System.Collections.ObjectModel;
 using MyNameList.Data;
 using MyNameList.Wording;
-using Microsoft.Win32;
-using MyLib.File;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MyNameList.UI {
     /// <summary>
@@ -60,6 +49,8 @@ namespace MyNameList.UI {
 
             if (0 < this._appData.RecentFiles.Count) {
                 this.ShowNameList(this._appData.RecentFiles[0], false);
+            } else {
+                this.Title = Titles.NewFile;
             }
 
             this.cEnglishNameTitle.Content = Titles.EnglishName + Titles.Asc;
@@ -405,6 +396,7 @@ namespace MyNameList.UI {
                 this._appData.Save();
                 this.CreateRecentFilesMenu();
             } else {
+                this.Title = this._operator.FileName;
                 this.AddRecentFile(filePath);
                 this._currentNameListFile = filePath;
             }
