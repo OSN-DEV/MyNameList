@@ -188,6 +188,10 @@ namespace MyNameList.UI {
                         this.Add_Click(null, null);
                     }
                 }
+            } else if (e.Key == Key.Escape) {
+                if (Keyboard.Modifiers == ModifierKeys.Shift) {
+                    this.ClearInputArea();
+                }
             }
         }
 
@@ -269,12 +273,14 @@ namespace MyNameList.UI {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Cell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            var text = sender as TextBlock;
-            if (null != text) {
-                try {
-                    Clipboard.SetText(text.Text);
-                } catch {
+            if (Keyboard.Modifiers == ModifierKeys.Control) {
+                var text = sender as TextBlock;
+                if (null != text) {
+                    try {
+                        Clipboard.SetText(text.Text);
+                    } catch {
 
+                    }
                 }
             }
         }
@@ -295,6 +301,7 @@ namespace MyNameList.UI {
             this.cEnglishName.Text = "";
             this.cJapaneseName.Text = "";
             this.cNote.Text = "";
+            this.cEnglishName.Tag = null;
         }
 
         /// <summary>
